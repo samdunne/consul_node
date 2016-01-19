@@ -1,0 +1,13 @@
+[Unit]
+Description=consul
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+ExecStart=/usr/local/bin/consul agent $OPTIONS -config-dir <%= node['chef-consul']['config_dir'] %> -data-dir <%= node['chef-consul']['data_dir'] %>
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
