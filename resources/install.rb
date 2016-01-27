@@ -1,4 +1,4 @@
-property :instance_name, String, name_property: true
+property :service_name, String, name_property: true
 property :version, kind_of: String, default: '0.6.3'
 
 action :install do
@@ -35,11 +35,11 @@ action :install do
 
   case node['init_package']
   when 'systemd'
-    template "/etc/systemd/system/#{instance_name}.service" do
+    template "/etc/systemd/system/#{service_name}.service" do
       cookbook 'chef-consul'
       source 'init/systemd.erb'
     end
-    service instance_name do
+    service service_name do
       action [ :enable, :start ]
     end
   end
